@@ -1,8 +1,10 @@
+import React from 'react'
+
 export default function App() {
   return (
-    <div style={{ padding: '24px', fontFamily: 'Arial, sans-serif' }}>
-      <h1>TradeB</h1>
-      <p>Projeto iniciado com sucesso.</p>
+    <div style={{ padding: 40 }}>
+      <h1>FUNCIONANDO 🚀</h1>
+      <p>Deploy OK</p>
     </div>
   )
 }
