@@ -1,132 +1,66 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { API_URL } from './config'
+
+type HealthResponse = {
+  status: string
+}
 
 export default function App() {
-  const [active, setActive] = useState<'dashboard' | 'devices' | 'settings'>('dashboard')
+  const [apiStatus, setApiStatus] = useState('carregando...')
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function loadHealth() {
+      try {
+        const response = await fetch(`${API_URL}/health`)
+        const data: HealthResponse = await response.json()
+        setApiStatus(data.status)
+      } catch (error) {
+        setApiStatus('erro ao conectar')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadHealth()
+  }, [])
 
   return (
-    <div style={layout}>
-      
-      {/* SIDEBAR */}
-      <aside style={sidebar}>
-        <h2 style={{ marginBottom: 30 }}>TradeB</h2>
-
-        <MenuItem label="Dashboard" active={active === 'dashboard'} onClick={() => setActive('dashboard')} />
-        <MenuItem label="Dispositivos" active={active === 'devices'} onClick={() => setActive('devices')} />
-        <MenuItem label="Configurações" active={active === 'settings'} onClick={() => setActive('settings')} />
-      </aside>
-
-      {/* MAIN */}
-      <main style={main}>
-
-        {active === 'dashboard' && <Dashboard />}
-        {active === 'devices' && <Devices />}
-        {active === 'settings' && <Settings />}
-
-      </main>
-    </div>
-  )
-}
-
-/* ================= COMPONENTES ================= */
-
-function MenuItem({ label, active, onClick }: any) {
-  return (
-    <button
-      onClick={onClick}
+    <div
       style={{
-        ...menuItem,
-        background: active ? '#1e293b' : 'transparent',
-        color: active ? '#fff' : '#94a3b8'
+        minHeight: '100vh',
+        background:
+          'linear-gradient(135deg, #0f172a 0%, #111827 45%, #1e293b 100%)',
+        color: '#f8fafc',
+        fontFamily:
+          'Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+        padding: 40,
       }}
     >
-      {label}
-    </button>
-  )
-}
+      <h1 style={{ fontSize: 42, marginBottom: 12 }}>TradeB</h1>
+      <p style={{ fontSize: 18, color: '#cbd5e1', marginBottom: 32 }}>
+        Frontend online com backend conectado
+      </p>
 
-function Dashboard() {
-  return (
-    <div>
-      <h1>Dashboard 🚀</h1>
+      <div
+        style={{
+          maxWidth: 500,
+          background: 'rgba(255,255,255,0.05)',
+          border: '1px solid rgba(255,255,255,0.08)',
+          borderRadius: 20,
+          padding: 24,
+        }}
+      >
+        <h2 style={{ marginTop: 0 }}>Status da API</h2>
 
-      <div style={grid}>
-        <Card title="Dispositivos" value="12" />
-        <Card title="Online" value="8" />
-        <Card title="Comandos" value="23" />
+        <p style={{ fontSize: 18 }}>
+          {loading ? 'Verificando conexão...' : `Backend: ${apiStatus}`}
+        </p>
+
+        <p style={{ color: '#94a3b8', marginBottom: 0 }}>
+          URL: {API_URL}
+        </p>
       </div>
     </div>
   )
-}
-
-function Devices() {
-  return (
-    <div>
-      <h1>Dispositivos</h1>
-      <p>Lista de dispositivos vai aparecer aqui.</p>
-    </div>
-  )
-}
-
-function Settings() {
-  return (
-    <div>
-      <h1>Configurações</h1>
-      <p>Ajustes do sistema.</p>
-    </div>
-  )
-}
-
-function Card({ title, value }: any) {
-  return (
-    <div style={card}>
-      <h3>{title}</h3>
-      <p style={{ fontSize: 28 }}>{value}</p>
-    </div>
-  )
-}
-
-/* ================= ESTILOS ================= */
-
-const layout: React.CSSProperties = {
-  display: 'flex',
-  minHeight: '100vh',
-  background: '#0f172a',
-  color: '#fff',
-}
-
-const sidebar: React.CSSProperties = {
-  width: 220,
-  background: '#020617',
-  padding: 20,
-  borderRight: '1px solid #1e293b',
-}
-
-const main: React.CSSProperties = {
-  flex: 1,
-  padding: 30,
-}
-
-const menuItem: React.CSSProperties = {
-  width: '100%',
-  padding: 12,
-  border: 'none',
-  textAlign: 'left',
-  cursor: 'pointer',
-  borderRadius: 10,
-  marginBottom: 10,
-  fontWeight: 600,
-}
-
-const grid: React.CSSProperties = {
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-  gap: 20,
-  marginTop: 20,
-}
-
-const card: React.CSSProperties = {
-  background: '#020617',
-  padding: 20,
-  borderRadius: 12,
-  border: '1px solid #1e293b',
 }
