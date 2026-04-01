@@ -27,7 +27,6 @@ export default function App() {
     e.preventDefault()
     setLoading(true)
     setMessage('')
-    setToken('')
 
     try {
       const response = await fetch(`${API_URL}/auth/login`, {
@@ -52,7 +51,7 @@ export default function App() {
       localStorage.setItem('tradeb_token', receivedToken)
       setToken(receivedToken)
       setMessage('Login realizado com sucesso')
-    } catch (error) {
+    } catch {
       setMessage('Não foi possível conectar ao backend')
     } finally {
       setLoading(false)
@@ -146,6 +145,7 @@ export default function App() {
               >
                 E-mail
               </label>
+
               <input
                 id="email"
                 type="email"
@@ -169,6 +169,7 @@ export default function App() {
               >
                 Senha
               </label>
+
               <input
                 id="password"
                 type="password"

@@ -31,10 +31,18 @@ export default function PrivateRoute({ children }: PrivateRouteProps) {
             borderRadius: 20,
             padding: 24,
             textAlign: 'center',
+            boxShadow: '0 20px 60px rgba(0,0,0,0.30)',
           }}
         >
-          <h2 style={{ marginTop: 0 }}>Acesso negado</h2>
-          <p style={{ color: '#cbd5e1', lineHeight: 1.6 }}>
+          <h2 style={{ marginTop: 0, marginBottom: 12 }}>Acesso negado</h2>
+
+          <p
+            style={{
+              color: '#cbd5e1',
+              lineHeight: 1.6,
+              marginBottom: 0,
+            }}
+          >
             Você precisa fazer login para acessar esta área.
           </p>
         </div>

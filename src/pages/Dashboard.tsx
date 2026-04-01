@@ -16,7 +16,7 @@ export default function Dashboard() {
     >
       <div
         style={{
-          maxWidth: 1000,
+          maxWidth: 1100,
           margin: '0 auto',
         }}
       >
@@ -27,7 +27,7 @@ export default function Dashboard() {
             alignItems: 'center',
             gap: 16,
             flexWrap: 'wrap',
-            marginBottom: 24,
+            marginBottom: 28,
           }}
         >
           <div>
@@ -40,9 +40,18 @@ export default function Dashboard() {
                 letterSpacing: 1.2,
               }}
             >
-              Painel
+              Painel administrativo
             </p>
-            <h1 style={{ margin: '8px 0 0', fontSize: 40 }}>Dashboard TradeB</h1>
+
+            <h1
+              style={{
+                margin: '8px 0 0',
+                fontSize: 40,
+                fontWeight: 800,
+              }}
+            >
+              Dashboard TradeB
+            </h1>
           </div>
 
           <button
@@ -55,6 +64,7 @@ export default function Dashboard() {
               borderRadius: 12,
               fontWeight: 700,
               cursor: 'pointer',
+              boxShadow: '0 10px 25px rgba(239,68,68,0.20)',
             }}
           >
             Sair
@@ -86,10 +96,29 @@ function Card({ title, value }: { title: string; value: string }) {
         border: '1px solid rgba(255,255,255,0.08)',
         borderRadius: 20,
         padding: 20,
+        boxShadow: '0 20px 60px rgba(0,0,0,0.18)',
       }}
     >
-      <p style={{ margin: 0, color: '#94a3b8', marginBottom: 10 }}>{title}</p>
-      <h3 style={{ margin: 0, fontSize: 26 }}>{value}</h3>
+      <p
+        style={{
+          margin: 0,
+          color: '#94a3b8',
+          marginBottom: 10,
+          fontSize: 14,
+        }}
+      >
+        {title}
+      </p>
+
+      <h3
+        style={{
+          margin: 0,
+          fontSize: 26,
+          fontWeight: 800,
+        }}
+      >
+        {value}
+      </h3>
     </div>
   )
 }
