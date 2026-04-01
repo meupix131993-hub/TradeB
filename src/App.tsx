@@ -1,5 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { API_URL } from './config'
+import { isAuthenticated } from './utils/auth'
+import Dashboard from './pages/Dashboard'
+import PrivateRoute from './components/PrivateRoute'
 
 type LoginResponse = {
   token?: string
@@ -12,6 +15,13 @@ export default function App() {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
   const [token, setToken] = useState('')
+
+  useEffect(() => {
+    const savedToken = localStorage.getItem('tradeb_token')
+    if (savedToken) {
+      setToken(savedToken)
+    }
+  }, [])
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault()
@@ -39,14 +49,22 @@ export default function App() {
       }
 
       const receivedToken = data.token || ''
-      setToken(receivedToken)
       localStorage.setItem('tradeb_token', receivedToken)
+      setToken(receivedToken)
       setMessage('Login realizado com sucesso')
     } catch (error) {
       setMessage('Não foi possível conectar ao backend')
     } finally {
       setLoading(false)
     }
+  }
+
+  if (isAuthenticated() || token) {
+    return (
+      <PrivateRoute>
+        <Dashboard />
+      </PrivateRoute>
+    )
   }
 
   return (
@@ -195,22 +213,6 @@ export default function App() {
               }}
             >
               {message}
-            </div>
-          )}
-
-          {token && (
-            <div
-              style={{
-                marginTop: 18,
-                padding: 14,
-                borderRadius: 14,
-                background: 'rgba(34,197,94,0.12)',
-                border: '1px solid rgba(34,197,94,0.24)',
-                color: '#bbf7d0',
-                wordBreak: 'break-all',
-              }}
-            >
-              Token salvo no navegador com sucesso.
             </div>
           )}
         </div>
